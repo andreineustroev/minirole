@@ -1,0 +1,45 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  # Ubuntu
+  - name: Ubuntu_latest
+    image: ubuntu:latest
+    env:
+      DEBIAN_FRONTEND: noninteractive
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+
+  # Centos
+  - name: CentOS_7
+    image: centos:7
+    override_command: true
+    command: /usr/sbin/init
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      stdout_callback: yaml
+      bin_ansible_callbacks: true
+      callback_whitelist: timer,profile_tasks
+      fact_caching: jsonfile
+      fact_caching_connection: ./cache
+      forks: 100
+    ssh_connection:
+      pipelining: true
+  lint:
+    name: ansible-lint
+
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
