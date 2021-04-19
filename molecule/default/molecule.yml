@@ -11,6 +11,8 @@ platforms:
     image: ubuntu:latest
     env:
       DEBIAN_FRONTEND: noninteractive
+    override_command: true
+    command: /usr/sbin/init
     privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
