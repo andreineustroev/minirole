@@ -1,2 +1,11 @@
 ---
-# handlers file for minirole
+- name: restart_nginx
+  systemd:
+    name: nginx
+    state: reloaded
+
+- name: enable_nginx
+  systemd:
+    name: nginx
+    enabled: true
+    state: started

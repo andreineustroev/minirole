@@ -1,2 +1,5 @@
 ---
-# defaults file for minirole
+minirole__nginx_version: 1.18.0
+
+minirole__vhost_root: /var/www/
+minirole__app_content: Hello World
